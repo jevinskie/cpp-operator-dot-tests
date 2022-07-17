@@ -19,8 +19,12 @@ class Foo {
 public:
     Foo(int n) : m_n(n) {}
     void f() {
-        puts("Foo::f()");
+        printf("Foo::f() = %d", m_n);
     }
+    int operator++() {
+        return m_n++;
+    }
+
 private:
     int m_n;
 };
@@ -28,7 +32,8 @@ private:
 void ref_intro_test() {
     Foo xvar{77};
     Ref<Foo> r{xvar}; // make r refer to xvar
+    r.operator.().f();
     r.f();            // means (r.operator.()).f() means (*r.p).f()
-    // ++r;              // means ++r.operator.()
-    // Ref<Foo> r2 = r;  // r2 refers to the same X as r (copy constructed)
+    ++r;              // means ++r.operator.()
+    Ref<Foo> r2 = r;  // r2 refers to the same X as r (copy constructed)
 }
